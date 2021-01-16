@@ -1,12 +1,12 @@
-/*hashset.c - solution for EC project
+/*hashset.c 
  *
  *Hash implementation of a Set ADT
  *
  *Author: Eliot Martin
  */
-#include "hashset.h"  /* the .h file does NOT reside in /usr/local/include/ADTs */
+#include "hashset.h"  
 #include <stdlib.h>
-/* any other includes needed by your code */
+
 #define UNUSED __attribute__((unused))
 #define DEFAULT_CAPACITY 16
 #define MAX_CAPACITY 134217728L
@@ -32,11 +32,6 @@ typedef struct s_data {
 	void (*freeV)(void *v);
 } SData;
 
-/*
- * important - remove UNUSED attributed in signatures when you flesh out the
- * methods
- */
-
 static void purge(SData *sd, void (*freeV)(void *v)) {
 	long i;
 
@@ -56,7 +51,7 @@ static void purge(SData *sd, void (*freeV)(void *v)) {
 }
 
 static void s_destroy(const Set *s) {
-	/* implement the destroy() method */
+	/* destroy() method */
 	SData *sd = (SData *)s->self;
 	purge(sd, sd->freeV);
 	free(sd->buckets);
@@ -65,7 +60,7 @@ static void s_destroy(const Set *s) {
 }
 
 static void s_clear(const Set *s) {
-	/* implement the clear() method */
+	/* clear() method */
 	SData *sd = (SData *)s->self;
 	purge(sd, sd->freeV);
 	sd->size = 0;
@@ -133,7 +128,7 @@ static int insertNode(SData *sd, void *member, long i) {
 }
 
 static int s_add(const Set *s, void *member) {
-	/* implement the add() method */
+	/* add() method */
 	SData *sd = (SData *)s->self;
 	long i;
 	Node *p;
@@ -152,20 +147,20 @@ static int s_add(const Set *s, void *member) {
 }
 
 static int s_contains(const Set *s, void *member) {
-	/* implement the contains() method */
+	/* contains() method */
 	SData *sd = (SData *)s->self;
 	long l;
 	return (findMember(sd, member, &l) != NULL);
 }
 
 static int s_isEmpty(const Set *s) {
-	/* implement the isEmpty() method */
+	/* isEmpty() method */
 	SData *sd = (SData *)s->self;
 	return (sd->size == 0L);
 }
 
 static int s_remove(const Set *s, void *member) {
-	/* implement the remove() method */
+	/* remove() method */
 	SData *sd = (SData *)s->self;
 	long i;
 	Node *remove;
@@ -192,7 +187,7 @@ static int s_remove(const Set *s, void *member) {
 }
 
 static long s_size(const Set *s) {
-	/* implement the size() method */
+	/* size() method */
 	SData *sd = (SData *)s->self;
 	return (sd->size);
 }
@@ -217,7 +212,7 @@ static void **valueArray(SData *sd) {
 }
 
 static void **s_toArray(const Set *s, long *len) {
-	/* implement the toArray() method */
+	/* toArray() method */
 	SData *sd = (SData *)s->self;
 	void **tmp = valueArray(sd);
 	if (tmp != NULL)
@@ -226,7 +221,7 @@ static void **s_toArray(const Set *s, long *len) {
 }
 
 static const Iterator *s_itCreate(const Set *s) {
-	/* implement the itCreate() method */
+	/* itCreate() method */
 	SData *sd = (SData *)s->self;
 	const Iterator *it = NULL;
 	void **tmp = (void **)valueArray(sd);
@@ -291,6 +286,6 @@ const Set *HashSet(void (*freeValue)(void*), int (*cmpFxn)(void*, void*),
                    long capacity, double loadFactor,
                    long (*hashFxn)(void *m, long N)
                   ) {
-	/* construct a Set instance and return to the caller */
+	/* Set instance and return to the caller */
 	return newSet(capacity, loadFactor, hashFxn, cmpFxn, freeValue);
 }
